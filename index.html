@@ -56,12 +56,18 @@ section{padding:clamp(3.5rem,7vw,6rem) 0;border-top:1px solid var(--grid)}
 .abstract::before{content:"ABSTRACT — ";font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--signal)}
 
 /* ---------- Hero figure ---------- */
-.hero-fig{margin-top:2.4rem;border:1px solid var(--grid);background:var(--paper-pure)}
-.hero-fig img{width:100%;height:auto;display:block}
-.hero-fig figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--mute);padding:.85rem 1.1rem;border-top:1px solid var(--grid);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.hero-fig{margin-top:2.4rem;background:var(--paper-pure)}
+.hero-fig-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.hero-fig-strip img{width:100%;height:auto;display:block;object-fit:cover;aspect-ratio:1/1}
+.hero-fig-strip img+img{border-left:none}
+.hero-fig figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--mute);padding:.85rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .hero-fig figcaption b{color:var(--signal);font-weight:600}
 .hero-fig figcaption a{color:var(--signal);text-decoration:none}
 .hero-fig figcaption a:hover{text-decoration:underline}
+@media(max-width:640px){
+  .hero-fig-strip{grid-template-columns:1fr}
+  .hero-fig-strip img+img{border-left:none;border-top:1px solid var(--grid)}
+}
 
 /* ---------- Eyebrow / heads ---------- */
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
@@ -88,6 +94,13 @@ p.body i{font-style:italic}
 
 /* ---------- Operations ---------- */
 .ops p{max-width:var(--measure);margin-bottom:1.1rem;font-size:1.04rem}
+
+/* ---------- Lineup figure ---------- */
+.lineup-fig{margin-bottom:2.4rem;width:50%;margin-left:auto;margin-right:auto;}
+.lineup-fig img{width:100%;height:auto;display:block}
+@media(max-width:640px){.lineup-fig{width:100%}}
+.lineup-fig figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--mute);padding:.85rem 0}
+.lineup-fig figcaption b{color:var(--signal);font-weight:600}
 
 /* ---------- Product table ---------- */
 table.data{width:100%;border-collapse:collapse;font-size:.92rem}
@@ -146,10 +159,13 @@ table.data a:hover{text-decoration:underline}
     </div>
     <p class="abstract">Infinite Battery designs and manufactures connected, repairable, fire-resistant lithium-ion packs for e-bikes and light electric vehicles. Each pack monitors its cells individually, reports its state of health over the air, and is built to be opened, serviced, and recovered — not discarded. Protected by multiple patents and deployed across shared-mobility fleets, our packs are in production today.</p>
     <figure class="hero-fig">
-      <img src="assets/rendercad_main.png" alt="Infinite Battery pack — grey serviceable enclosure with violet carry handle and per-cell status LEDs">
+      <div class="hero-fig-strip">
+        <img src="assets/images/infinite_closed.png" alt="Infinite Battery pack — boîtier en aluminium forgé fermé">
+        <img src="assets/images/infinite_open_pack.png" alt="Infinite Battery pack — boîtier ouvert, accès au module de cellules">
+        <img src="assets/images/infinite_open_bms.png" alt="Infinite Battery pack — BMS exposé, accès complet aux composants internes">
+      </div>
       <figcaption>
-        <span><b>FIG. 1.</b> Infinite pack — serviceable enclosure, integrated carry handle, per-cell status indication.</span>
-        <span><a href="https://www.youtube.com/watch?v=vfiH7PKu-XE" target="_blank" rel="noopener">▶ Watch the explainer</a></span>
+        <span><b>FIG. 1.</b> Le boîtier en aluminium forgé est conçu pour être ouvert sans risque — accès direct au module de cellules et au BMS pour inspection, remplacement de cellules ou mise à jour du firmware.</span>
       </figcaption>
     </figure>
   </div>
@@ -210,6 +226,11 @@ table.data a:hover{text-decoration:underline}
     <div class="eyebrow" data-n="03">Product line</div>
     <h2 class="sec">Three packs, one architecture</h2>
     <p class="lede">Datasheets and 3D models (STEP) available for download per model. Specifications below are indicative — request a sample for full validation data.</p>
+
+    <figure class="lineup-fig">
+      <img src="assets/images/lineup.png" alt="Infinite Battery lineup — Classic, Cargo and Mega">
+      <figcaption><b>FIG. 2.</b> 3 formats in production — Classic, Cargo and Mega — with respectively 30, 52 and 104 cells in 2170 format.</figcaption>
+    </figure>
 
     <div class="tbl-scroll">
       <table class="data">
