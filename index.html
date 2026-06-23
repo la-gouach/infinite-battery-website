@@ -56,7 +56,7 @@ section{padding:clamp(3.5rem,7vw,6rem) 0;border-top:1px solid var(--grid)}
 .abstract::before{content:"ABSTRACT — ";font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--signal)}
 
 /* ---------- Hero figure ---------- */
-.hero-fig{margin-top:2.4rem;background:var(--paper-pure)}
+.hero-fig{margin-top:2.4rem}
 .hero-fig-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
 .hero-fig-strip img{width:100%;height:auto;display:block;object-fit:cover;aspect-ratio:1/1}
 .hero-fig-strip img+img{border-left:none}
@@ -73,7 +73,7 @@ section{padding:clamp(3.5rem,7vw,6rem) 0;border-top:1px solid var(--grid)}
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
 .eyebrow::before{content:attr(data-n);color:var(--mute-soft)}
 h2.sec{font-family:var(--display);font-weight:600;font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:.6rem}
-.lede{max-width:var(--measure);color:var(--mute);margin-bottom:2.6rem}
+.lede{max-width:var(--measure);color:var(--ink);margin-bottom:2.6rem}
 p.body{max-width:var(--measure);margin-bottom:1.1rem}
 p.body b{font-weight:600}
 p.body i{font-style:italic}
@@ -94,6 +94,18 @@ p.body i{font-style:italic}
 
 /* ---------- Operations ---------- */
 .ops p{max-width:var(--measure);margin-bottom:1.1rem;font-size:1.04rem}
+
+/* ---------- Operations layout ---------- */
+.ops-layout{display:flex;gap:clamp(2rem,4vw,3rem);align-items:flex-start}
+.ops-layout .ops{flex:1}
+.ops-fig{flex:0 0 38%;margin:0}
+.ops-fig img{width:100%;height:auto;display:block}
+.ops-fig figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--mute);padding:.85rem 0}
+.ops-fig figcaption b{color:var(--signal);font-weight:600}
+@media(max-width:640px){
+  .ops-layout{flex-direction:column}
+  .ops-fig{flex:none;width:100%}
+}
 
 /* ---------- Lineup figure ---------- */
 .lineup-fig{margin-bottom:2.4rem;width:50%;margin-left:auto;margin-right:auto;}
@@ -212,10 +224,16 @@ table.data a:hover{text-decoration:underline}
   <div class="wrap">
     <div class="eyebrow" data-n="02">Operations</div>
     <h2 class="sec">A repair network, not a repair service</h2>
-    <div class="ops">
-      <p>Repairability only matters if anyone can act on it. We don't run repairs as a centralized service — we provide the <b>hardware, the software, and the knowledge</b> so that others can.</p>
-      <p>Every pack is designed to be opened and serviced with standard tools. A failed cell group is replaced, the pack is re-tested to specification, and its full history is logged against its individual telemetry record. Fleet operators can do this in-house through our short online training, or rely on a growing network of independent technicians.</p>
-      <p>The result is an open layer rather than a closed service: brands, fleets, and independents can all plug in. We build the backbone for a world where batteries are <b>repaired and recovered instead of replaced</b> — and let an ecosystem grow on top of it.</p>
+    <div class="ops-layout">
+      <div class="ops">
+        <p>Repairability only matters if anyone can act on it. We don't run repairs as a centralized service — we provide the <b>hardware, the software, and the knowledge</b> so that others can.</p>
+        <p>Every pack is designed to be opened and serviced with standard tools. A failed cell group is replaced, the pack is re-tested to specification, and its full history is logged against its individual telemetry record. Fleet operators can do this in-house through our short online training, or rely on a growing network of independent technicians.</p>
+        <p>The result is an open layer rather than a closed service: brands, fleets, and independents can all plug in. We build the backbone for a world where batteries are <b>repaired and recovered instead of replaced</b> — and let an ecosystem grow on top of it.</p>
+      </div>
+      <figure class="ops-fig">
+        <img src="assets/images/operations.png" alt="On-site battery maintenance">
+        <figcaption><b>FIG. 3.</b> Maintenance can be done on site, which is cost effective considering the high complexity of shipping used batteries.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -255,7 +273,6 @@ table.data a:hover{text-decoration:underline}
           <tr><td class="lbl">Dimensions</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
           <tr><td class="lbl">Datasheet</td><td><a href="#">PDF ↓</a></td><td><a href="#">PDF ↓</a></td><td><a href="#">PDF ↓</a></td></tr>
           <tr><td class="lbl">3D model</td><td><a href="#">STEP ↓</a></td><td><a href="#">STEP ↓</a></td><td><a href="#">STEP ↓</a></td></tr>
-          <tr class="common-row"><td colspan="4">All packs — individual cell monitoring · connected BMS · fire-protection architecture · OTA telemetry · fully repairable</td></tr>
         </tbody>
       </table>
     </div>
@@ -292,7 +309,7 @@ table.data a:hover{text-decoration:underline}
     <div class="row">
       <span>Infinite Battery — <span class="red">in production</span></span>
       <span><a href="mailto:contact@gouach.com">contact@gouach.com</a></span>
-      <span>Capacité SAS · Marseille · France</span>
+      <span>Capacité SAS · 200 rue de la Croix de Nivert · 75015 Paris · France</span>
     </div>
   </div>
 </footer>
