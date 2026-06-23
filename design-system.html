@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinite Battery — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ---- Core palette ---- */
+  --ink:#0A0A0A;          /* near-black, primary text + logo */
+  --paper:#FAFAF8;        /* warm off-white, page ground */
+  --paper-pure:#FFFFFF;   /* pure white, cards/figures */
+  --signal:#5B2BD6;       /* Royal violet — the one accent */
+  --signal-deep:#4A1FB8;  /* pressed/hover violet */
+  --rule:#1A1A1A;         /* hairline rules, axes */
+  --grid:#E6E5E0;         /* faint graph grid */
+  --mute:#6B6B66;         /* secondary / caption text */
+  --mute-soft:#9A9A94;    /* tertiary */
+
+  /* ---- Type ---- */
+  --display:'Space Grotesk',-apple-system,sans-serif;
+  --body:'Source Serif 4',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  /* ---- Scale ---- */
+  --measure:68ch;
+  --gap:clamp(1.5rem,4vw,3rem);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:18px;
+  line-height:1.6;
+  font-feature-settings:"onum" 1,"pnum" 1;
+}
+::selection{background:var(--signal);color:#fff}
+
+/* ---------- Layout shell ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem)}
+section{padding:clamp(3.5rem,7vw,6rem) 0;border-top:1px solid var(--grid)}
+section:first-of-type{border-top:none}
+
+/* ---------- Masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--grid);
+  padding-top:clamp(2rem,5vw,3.5rem);
+  padding-bottom:1.6rem;
+}
+.masthead-top{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:2.2rem;
+}
+.masthead-top .red{color:var(--signal)}
+.brandline{display:flex;align-items:center;gap:1.1rem}
+.brandline svg{width:54px;height:54px;flex:none}
+.brandline h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(2rem,5vw,3.1rem);letter-spacing:-.02em;line-height:1;
+}
+.brandline .sub{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--signal);margin-top:.45rem;
+}
+.abstract{
+  margin-top:1.8rem;max-width:var(--measure);
+  font-size:1.05rem;color:var(--ink);
+}
+.abstract::before{
+  content:"ABSTRACT — ";font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.1em;color:var(--signal);
+}
+
+/* ---------- Eyebrow / section heads ---------- */
+.eyebrow{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--signal);
+  display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;
+}
+.eyebrow::before{content:attr(data-n);color:var(--mute-soft)}
+h2.sec{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.02em;
+  line-height:1.1;margin-bottom:.6rem;
+}
+.lede{max-width:var(--measure);color:var(--mute);margin-bottom:2.6rem}
+
+/* ---------- Color ---------- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--grid);border:1px solid var(--grid)}
+.swatch{background:var(--paper-pure);padding:1.1rem 1.1rem 1.2rem}
+.chip{height:88px;border-radius:3px;border:1px solid rgba(0,0,0,.06);margin-bottom:.8rem}
+.swatch .name{font-family:var(--display);font-weight:600;font-size:.92rem}
+.swatch .meta{font-family:var(--mono);font-size:.72rem;color:var(--mute);margin-top:.2rem;text-transform:uppercase;letter-spacing:.04em}
+.swatch .use{font-size:.82rem;color:var(--mute);margin-top:.55rem;line-height:1.4}
+
+/* ---------- Type specimens ---------- */
+.specimen{border:1px solid var(--grid);background:var(--paper-pure);padding:clamp(1.4rem,3vw,2.2rem);margin-bottom:1px}
+.specimen .tag{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mute);display:flex;justify-content:space-between;
+  border-bottom:1px solid var(--grid);padding-bottom:.7rem;margin-bottom:1.2rem;
+}
+.specimen .tag .red{color:var(--signal)}
+.d-xl{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,6vw,4rem);letter-spacing:-.03em;line-height:1}
+.d-lg{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:-.02em;line-height:1.1}
+.b-spec{font-family:var(--body);font-size:1.18rem;line-height:1.62;max-width:var(--measure)}
+.b-spec b{font-weight:600}
+.b-spec i{font-style:italic}
+.m-spec{font-family:var(--mono);font-size:.95rem;line-height:1.7;color:var(--ink)}
+.m-spec .c{color:var(--signal)}
+.scale-row{display:flex;align-items:baseline;gap:1.4rem;padding:.55rem 0;border-bottom:1px dotted var(--grid)}
+.scale-row:last-child{border-bottom:none}
+.scale-row .lbl{font-family:var(--mono);font-size:.7rem;color:var(--mute-soft);width:128px;flex:none;text-transform:uppercase;letter-spacing:.05em}
+.scale-row .sample{font-family:var(--display);letter-spacing:-.02em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- Logo lab ---------- */
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--grid);border:1px solid var(--grid)}
+.logo-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:2.4rem 1rem;min-height:200px;position:relative}
+.logo-cell .cap{position:absolute;top:.7rem;left:.8rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-soft)}
+.on-paper{background:var(--paper-pure)}
+.on-ink{background:var(--ink)}
+.on-ink .cap{color:#666}
+.on-signal{background:var(--signal)}
+.on-signal .cap{color:rgba(255,255,255,.7)}
+.lockup{display:flex;align-items:center;gap:.7rem}
+.lockup svg{width:42px;height:42px}
+.lockup .wm{font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
+.clearspace{position:relative;background:var(--paper-pure);padding:2.6rem;display:flex;justify-content:center}
+.clearspace svg{width:90px;height:90px}
+.cs-mark{position:absolute;inset:1.4rem;border:1px dashed var(--signal);opacity:.5}
+
+/* ---------- Figure / graph signature ---------- */
+.figure{background:transparent;padding:0}
+.figure svg{width:100%;height:auto;display:block}
+.figcaption{font-family:var(--mono);font-size:.76rem;line-height:1.55;color:var(--mute);margin-top:.9rem;padding-top:.8rem;border-top:1px solid var(--grid)}
+.figcaption b{color:var(--signal);font-weight:600}
+
+/* ---------- Components ---------- */
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+@media(max-width:760px){.cols-2{grid-template-columns:1fr}}
+.btn{
+  font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.01em;
+  border:none;cursor:pointer;padding:.85rem 1.5rem;border-radius:2px;
+  display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;transition:.15s;
+}
+.btn-primary{background:var(--signal);color:#fff}
+.btn-primary:hover{background:var(--signal-deep)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn .arr{font-family:var(--mono)}
+.field{margin-bottom:1.1rem}
+.field label{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:.4rem}
+.field input,.field select{
+  width:100%;font-family:var(--body);font-size:1rem;padding:.7rem .85rem;
+  border:1.5px solid var(--grid);background:var(--paper-pure);border-radius:2px;color:var(--ink);
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--signal)}
+.badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.32rem .6rem;border-radius:2px}
+.badge-red{background:var(--signal);color:#fff}
+.badge-out{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.badge-mute{background:var(--grid);color:var(--mute)}
+.statcard{border-left:3px solid var(--signal);padding:.2rem 0 .2rem 1.1rem}
+.statcard .n{font-family:var(--display);font-weight:700;font-size:2.4rem;letter-spacing:-.03em;line-height:1;color:var(--signal)}
+.statcard .n sup{font-size:1rem;color:var(--signal);vertical-align:super}
+.statcard .l{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-top:.4rem}
+
+/* data table */
+table.data{width:100%;border-collapse:collapse;font-size:.92rem}
+table.data caption{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--signal);text-align:left;padding-bottom:.7rem}
+table.data th{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);text-align:left;border-bottom:2px solid var(--ink);padding:.55rem .8rem}
+table.data td{font-family:var(--body);border-bottom:1px solid var(--grid);padding:.55rem .8rem}
+table.data td.num{font-family:var(--mono);text-align:right}
+table.data tr:hover td{background:rgba(74,31,184,.03)}
+
+/* principles */
+.principle{display:grid;grid-template-columns:48px 1fr;gap:1.1rem;padding:1.3rem 0;border-bottom:1px solid var(--grid)}
+.principle:last-child{border-bottom:none}
+.principle .idx{font-family:var(--mono);font-size:.8rem;color:var(--signal);padding-top:.2rem}
+.principle h4{font-family:var(--display);font-weight:600;font-size:1.05rem;margin-bottom:.3rem}
+.principle p{color:var(--mute);font-size:.96rem;max-width:62ch}
+
+/* footer */
+.colophon{border-top:3px solid var(--ink);padding:2rem 0 3rem;font-family:var(--mono);font-size:.74rem;color:var(--mute);letter-spacing:.04em}
+.colophon .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.colophon .red{color:var(--signal)}
+
+/* misc utility */
+.note{font-family:var(--mono);font-size:.78rem;color:var(--mute);background:var(--paper-pure);border:1px dashed var(--grid);padding:.9rem 1.1rem;border-radius:2px;line-height:1.55}
+.kv{font-family:var(--mono);font-size:.82rem;color:var(--mute)}
+.kv b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-top">
+      <span>Infinite Battery — Brand &amp; Design System</span>
+      <span><span class="red">Vol. 1</span> · Rev. 2026.06</span>
+    </div>
+    <div class="brandline">
+      <svg viewBox="0 0 455.65 457.2" xmlns="http://www.w3.org/2000/svg" aria-label="Infinite Battery mark">
+        <path fill="#0A0A0A" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/>
+        <path fill="#0A0A0A" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/>
+      </svg>
+      <div>
+        <h1>Infinite Battery</h1>
+        <div class="sub">Repairable · Fire-resistant · Connected</div>
+      </div>
+    </div>
+    <p class="abstract">A complete visual identity for Infinite Battery, derived from the world it operates in — measurement, materials science, and electrochemistry. The system pairs the precision of a physics journal with the warmth of long-form reading: a near-black/off-white ground, a single violet accent borrowed from the high-energy end of the spectrum, and a typographic hierarchy built for clarity over decoration. Violet replaces the danger-coded red of a typical battery brand — it signals energy and precision without alarm. Every asset built on this system should read like a well-reasoned scientific article.</p>
+  </div>
+</header>
+
+<!-- ============ 01 FOUNDATION / PRINCIPLES ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="01">Foundation</div>
+    <h2 class="sec">Design principles</h2>
+    <p class="lede">Five rules that keep every asset coherent. When a decision is ambiguous, defer to these.</p>
+    <div class="principle">
+      <div class="idx">P1</div>
+      <div><h4>Evidence over assertion</h4><p>Lead with the measured fact, the figure, the spec. The brand earns trust by showing data, not by adjectives. A chart outranks a slogan.</p></div>
+    </div>
+    <div class="principle">
+      <div class="idx">P2</div>
+      <div><h4>One accent, used as a signal</h4><p>Violet is reserved for the single most important thing on a surface — the call to action, the key data point, the result. If everything is the accent, nothing is.</p></div>
+    </div>
+    <div class="principle">
+      <div class="idx">P3</div>
+      <div><h4>Read like a paper, not a pitch</h4><p>Serif body text, generous measure, real hierarchy. Captions and labels speak in the monospace "lab notebook" voice. The reader should feel informed, not sold to.</p></div>
+    </div>
+    <div class="principle">
+      <div class="idx">P4</div>
+      <div><h4>Structure encodes meaning</h4><p>Numbering, rules, and labels exist only where order or grouping is real — a process, a dataset, a sequence. Never as ornament.</p></div>
+    </div>
+    <div class="principle">
+      <div class="idx">P5</div>
+      <div><h4>Precision in the quiet parts</h4><p>This is a minimal system, so spacing, alignment, and hairline weights carry the quality. Get the millimetres right and the whole thing feels engineered.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 COLOR ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="02">Palette</div>
+    <h2 class="sec">Color</h2>
+    <p class="lede">A restrained, paper-and-ink system. Black and an off-white do all the structural work; one violet does all the emphasis. Greys are for hierarchy only.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0A0A0A"></div><div class="name">Ink</div><div class="meta">#0A0A0A · K100</div><div class="use">Primary text, logo, rules, axes.</div></div>
+      <div class="swatch"><div class="chip" style="background:#FAFAF8"></div><div class="name">Paper</div><div class="meta">#FAFAF8</div><div class="use">Default page ground. Warm, not clinical.</div></div>
+      <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><div class="name">Pure White</div><div class="meta">#FFFFFF</div><div class="use">Figures, cards, data surfaces.</div></div>
+      <div class="swatch"><div class="chip" style="background:#5B2BD6"></div><div class="name">Royal Violet</div><div class="meta">#5B2BD6</div><div class="use">The accent. CTAs, key data, results.</div></div>
+      <div class="swatch"><div class="chip" style="background:#4A1FB8"></div><div class="name">Violet Deep</div><div class="meta">#4A1FB8</div><div class="use">Hover / pressed states only.</div></div>
+      <div class="swatch"><div class="chip" style="background:#6B6B66"></div><div class="name">Mute</div><div class="meta">#6B6B66</div><div class="use">Secondary text, captions.</div></div>
+      <div class="swatch"><div class="chip" style="background:#E6E5E0"></div><div class="name">Grid</div><div class="meta">#E6E5E0</div><div class="use">Hairlines, table rules, graph grid.</div></div>
+    </div>
+    <p class="note" style="margin-top:1.4rem">Ratio guideline — roughly <b>90% paper/ink, 8% grey, 2% violet</b>. The accent appears at most once or twice per viewport. Ink on Paper measures ~19:1 contrast; Violet on White ~7.6:1 — comfortably AA for body text and white-on-violet buttons alike, so the accent is safe to use as small text where red would have failed.</p>
+  </div>
+</section>
+
+<!-- ============ 03 TYPOGRAPHY ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="03">Typography</div>
+    <h2 class="sec">Three voices</h2>
+    <p class="lede">A display sans for headers and interface, a serif for everything you actually read, and a mono for data and labels. All three are open-source (Google Fonts) — zero licensing friction across web, print, and product.</p>
+
+    <div class="specimen">
+      <div class="tag"><span>Display / UI — <span class="red">Space Grotesk</span></span><span>weights 400–700</span></div>
+      <div class="d-xl">Repairable by design</div>
+      <div class="d-lg" style="margin-top:.6rem;color:var(--mute)">Headings, buttons, navigation, stat figures</div>
+    </div>
+
+    <div class="specimen">
+      <div class="tag"><span>Body — <span class="red">Source Serif 4</span></span><span>regular · italic · semibold</span></div>
+      <p class="b-spec">Every Infinite cell pack is built to be opened, diagnosed, and repaired — not discarded. The connected BMS reports per-cell state of health in real time, so a single weak cell can be identified and swapped rather than condemning the entire pack. This is the <i>argument for longevity</i>, made in <b>plain, readable prose</b> the way a journal makes a claim: stated once, clearly, then supported by evidence.</p>
+    </div>
+
+    <div class="specimen">
+      <div class="tag"><span>Data / Caption — <span class="red">IBM Plex Mono</span></span><span>the lab-notebook voice</span></div>
+      <div class="m-spec">FIG. 3 &nbsp; per-cell discharge profile, n=30<br>median ΔV = <span class="c">86 mV</span> · threshold = 100 mV<br>cells flagged: C4, C7 &nbsp; status: <span class="c">FAIL</span></div>
+    </div>
+
+    <div class="specimen">
+      <div class="tag"><span>Type scale</span><span>Space Grotesk</span></div>
+      <div class="scale-row"><span class="lbl">Display / 64</span><span class="sample" style="font-size:3rem;font-weight:700">Infinite</span></div>
+      <div class="scale-row"><span class="lbl">H1 / 40</span><span class="sample" style="font-size:2.1rem;font-weight:700">Repairable batteries</span></div>
+      <div class="scale-row"><span class="lbl">H2 / 30</span><span class="sample" style="font-size:1.65rem;font-weight:600">Fire-resistant by architecture</span></div>
+      <div class="scale-row"><span class="lbl">H3 / 22</span><span class="sample" style="font-size:1.25rem;font-weight:600">Connected diagnostics</span></div>
+      <div class="scale-row"><span class="lbl">Body / 18</span><span class="sample" style="font-family:var(--body);font-size:1.05rem">The readable serif baseline for article text.</span></div>
+      <div class="scale-row"><span class="lbl">Caption / 13</span><span class="sample" style="font-family:var(--mono);font-size:.8rem;letter-spacing:.04em">FIG. CAPTION · MONOSPACE · UPPERCASE</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 LOGO ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="04">Mark</div>
+    <h2 class="sec">Logo &amp; lockups</h2>
+    <p class="lede">The mark reads as an infinity loop resolved into two orbital nodes above a charged base — continuity, connection, energy. It is a solid-fill mark: it works only in Ink, reversed White, or knocked-out of Royal Violet. Never recolor the gradient or add effects.</p>
+
+    <div class="logo-grid">
+      <div class="logo-cell on-paper"><span class="cap">Primary · Ink on Paper</span>
+        <svg viewBox="0 0 455.65 457.2" width="74"><path fill="#0A0A0A" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#0A0A0A" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+      </div>
+      <div class="logo-cell on-ink"><span class="cap">Reversed · White on Ink</span>
+        <svg viewBox="0 0 455.65 457.2" width="74"><path fill="#FAFAF8" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#FAFAF8" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+      </div>
+      <div class="logo-cell on-signal"><span class="cap">Knockout · White on Violet</span>
+        <svg viewBox="0 0 455.65 457.2" width="74"><path fill="#FFFFFF" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#FFFFFF" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+      </div>
+      <div class="logo-cell on-paper"><span class="cap">Horizontal lockup</span>
+        <div class="lockup">
+          <svg viewBox="0 0 455.65 457.2"><path fill="#0A0A0A" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#0A0A0A" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+          <span class="wm">Infinite Battery</span>
+        </div>
+      </div>
+      <div class="clearspace logo-cell on-paper"><span class="cap">Clear space = ½ mark height</span>
+        <div class="cs-mark"></div>
+        <svg viewBox="0 0 455.65 457.2"><path fill="#0A0A0A" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#0A0A0A" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+      </div>
+    </div>
+    <p class="note" style="margin-top:1.4rem"><b>Don't:</b> stretch, rotate, add shadows/gradients, place on busy photos, recolor outside the three approved treatments, or set the wordmark in any face other than Space Grotesk. Minimum size: 20px / 6mm mark height.</p>
+  </div>
+</section>
+
+<!-- ============ 05 SIGNATURE: THE FIGURE ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="05">Signature element</div>
+    <h2 class="sec">The figure</h2>
+    <p class="lede">This is what makes the brand unmistakable: <b>real data, drawn as a journal figure.</b> Hairline axes, monospace tick labels, a numbered caption below, and violet reserved for the result — sitting open on the page, never in a card. Reuse this exact style everywhere — web, decks, datasheets, spec PDFs.</p>
+
+    <div class="cols-2">
+      <div class="figure">
+        <svg viewBox="0 0 460 300" font-family="IBM Plex Mono, monospace">
+          <!-- frame -->
+          <rect x="56" y="20" width="372" height="220" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+          <!-- fail-zone shading (above threshold) -->
+          <rect x="56" y="20" width="372" height="80" fill="#5B2BD6" fill-opacity="0.06"/>
+          <!-- gridlines -->
+          <g stroke="#E6E5E0" stroke-width="1">
+            <line x1="56" y1="64" x2="428" y2="64"/><line x1="56" y1="108" x2="428" y2="108"/>
+            <line x1="56" y1="152" x2="428" y2="152"/><line x1="56" y1="196" x2="428" y2="196"/>
+            <line x1="130" y1="20" x2="130" y2="240"/><line x1="204" y1="20" x2="204" y2="240"/>
+            <line x1="278" y1="20" x2="278" y2="240"/><line x1="352" y1="20" x2="352" y2="240"/>
+          </g>
+          <!-- threshold line (violet dashed) -->
+          <line x1="56" y1="100" x2="428" y2="100" stroke="#5B2BD6" stroke-width="1.6" stroke-dasharray="5 4"/>
+          <text x="424" y="94" text-anchor="end" font-size="10" font-weight="600" fill="#5B2BD6">threshold 100 mV</text>
+          <!-- nominal cells (ink dots) -->
+          <g fill="#0A0A0A">
+            <circle cx="74" cy="178" r="3.4"/><circle cx="111" cy="170" r="3.4"/>
+            <circle cx="148" cy="184" r="3.4"/><circle cx="222" cy="174" r="3.4"/>
+            <circle cx="259" cy="166" r="3.4"/><circle cx="333" cy="180" r="3.4"/>
+            <circle cx="370" cy="172" r="3.4"/><circle cx="407" cy="176" r="3.4"/>
+          </g>
+          <!-- outlier cells (violet, with halo) -->
+          <g fill="#5B2BD6">
+            <circle cx="185" cy="70" r="9" fill-opacity="0.16"/><circle cx="296" cy="58" r="9" fill-opacity="0.16"/>
+            <circle cx="185" cy="70" r="5"/><circle cx="296" cy="58" r="5"/>
+          </g>
+          <text x="185" y="56" text-anchor="middle" font-size="9.5" font-weight="600" fill="#5B2BD6">C4</text>
+          <text x="296" y="44" text-anchor="middle" font-size="9.5" font-weight="600" fill="#5B2BD6">C7</text>
+          <!-- axis labels -->
+          <text x="242" y="266" text-anchor="middle" font-size="10.5" fill="#6B6B66">CELL INDEX (C1–C10)</text>
+          <text x="20" y="130" text-anchor="middle" font-size="10.5" fill="#6B6B66" transform="rotate(-90 20 130)">ΔV FROM MEDIAN / mV</text>
+          <!-- y ticks -->
+          <g font-size="9" fill="#6B6B66" text-anchor="end">
+            <text x="50" y="200">0</text><text x="50" y="156">50</text>
+            <text x="50" y="112">100</text><text x="50" y="68">150</text>
+          </g>
+        </svg>
+        <div class="figcaption"><b>FIG. 1.</b> Per-cell voltage deviation from pack median, 10-cell Pony pack. Two cells (C4, C7) exceed the 100 mV disconnection threshold and are flagged <b>FAIL</b>. n = 30 reference packs.</div>
+      </div>
+
+      <div>
+        <div class="kv" style="line-height:2;margin-bottom:1.4rem">
+          <b>Figure recipe</b><br>
+          — plot axes only, no surrounding card<br>
+          — #E6E5E0 grid, thin and quiet<br>
+          — ink dots = nominal, violet = result/anomaly<br>
+          — violet dashed line = threshold / limit<br>
+          — all labels IBM Plex Mono, uppercase axes<br>
+          — caption: <b>FIG. N.</b> + plain-language finding
+        </div>
+        <div class="statcard" style="margin-bottom:1.6rem">
+          <div class="n">100<sup>mV</sup></div>
+          <div class="l">disconnection threshold</div>
+        </div>
+        <div class="statcard">
+          <div class="n">5<sup>+</sup></div>
+          <div class="l">patents · fire-protection system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 COMPONENTS ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="06">Interface</div>
+    <h2 class="sec">Components</h2>
+    <p class="lede">The minimal kit needed to build the new site and any datasheet. Square-ish corners (2px), hairline borders, violet used only on the primary action.</p>
+
+    <div class="cols-2" style="align-items:start">
+      <div>
+        <div class="kv" style="margin-bottom:.8rem">BUTTONS</div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem">
+          <a class="btn btn-primary">Request a quote <span class="arr">→</span></a>
+          <a class="btn btn-ghost">Read the spec</a>
+        </div>
+
+        <div class="kv" style="margin-bottom:.8rem">BADGES / STATUS</div>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem">
+          <span class="badge badge-red">EN 50604</span>
+          <span class="badge badge-out">UL Tested</span>
+          <span class="badge badge-mute">Draft</span>
+        </div>
+
+        <div class="kv" style="margin-bottom:.8rem">STAT</div>
+        <div class="statcard"><div class="n">30%<sup></sup></div><div class="l">of B2B pipeline from inbound</div></div>
+      </div>
+
+      <div>
+        <div class="kv" style="margin-bottom:.8rem">B2B QUALIFICATION FORM</div>
+        <div style="border:1px solid var(--grid);background:var(--paper-pure);padding:1.4rem;border-radius:2px">
+          <div class="field"><label>Company</label><input placeholder="Fleet operator, OEM, distributor…"></div>
+          <div class="field"><label>Application</label>
+            <select><option>E-bike fleet</option><option>Light EV / cargo</option><option>Micromobility operator</option><option>Other</option></select>
+          </div>
+          <div class="field"><label>Annual volume (packs)</label><input placeholder="e.g. 2,000"></div>
+          <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.4rem">Submit enquiry <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.6rem">
+      <table class="data">
+        <caption>Table 1 · Product line</caption>
+        <thead><tr><th>Model</th><th>Cells</th><th>Chemistry</th><th class="num">Capacity</th><th>Standard</th></tr></thead>
+        <tbody>
+          <tr><td>Infinite</td><td>30</td><td>21700 · M50 / M58</td><td class="num">—</td><td><span class="badge badge-out">EN 50604</span></td></tr>
+          <tr><td>Cargo</td><td>52</td><td>21700 · M50 / M58</td><td class="num">—</td><td><span class="badge badge-out">EN 50604</span></td></tr>
+          <tr><td>Mega</td><td>104</td><td>13s8p · M50</td><td class="num">1800 Wh</td><td><span class="badge badge-red">UL + EN</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 APPLICATION PREVIEW ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="07">In situ</div>
+    <h2 class="sec">Where it's going</h2>
+    <p class="lede">A glimpse of the system applied — the hero of the future B2B site, set as the opening of a paper.</p>
+
+    <div style="border:1px solid var(--rule);background:var(--paper-pure);overflow:hidden">
+      <div style="border-bottom:1px solid var(--grid);padding:.9rem 1.4rem;display:flex;justify-content:space-between;align-items:center">
+        <div class="lockup">
+          <svg viewBox="0 0 455.65 457.2" style="width:26px;height:26px"><path fill="#0A0A0A" d="m 305.78781,233.30575 c -0.15912,-1.75041 -0.15912,-3.50082 -0.15912,-5.25123 0.15912,-19.7319 -7.16077,-38.82728 -21.16406,-52.83056 l -3.18256,-3.18257 c -13.84415,-13.84415 -32.62128,-21.32318 -52.19405,-21.16405 -0.31826,0 -0.79564,0 -1.1139,0 -0.31825,0 -0.79564,0 -1.11389,0 -19.57277,-0.31825 -38.3499,7.3199 -52.19405,21.16405 l -3.18257,3.18257 c -14.00328,14.00328 -21.16405,33.09866 -21.16405,52.83056 0,1.75041 0,3.50082 -0.15913,5.25123 -2.06866,37.07687 -31.50738,67.47036 -68.584251,70.49379 C 34.951612,307.77775 -3.5574126,268.95047 0.26166442,222.16678 3.2851004,185.08991 33.678586,155.65119 70.437201,153.42339 c 1.591282,-0.15912 3.50082,-0.15912 5.092102,-0.15912 19.731896,0.15912 38.668157,-7.16077 52.671437,-21.16405 l 3.18257,-3.18257 c 14.00328,-14.00328 21.16405,-33.098657 21.16405,-52.830557 0,-2.54605 0.15912,-5.25123 0.31825,-7.79728 3.34169,-36.440358 33.09867,-65.4016914 69.53903,-68.10687043 44.07851,-3.02343597 80.67799,31.82564043 80.67799,75.10851043 0,0.31826 0,0.79564 0,1.1139 -0.31825,19.57276 7.3199,38.509017 21.16406,52.353167 l 3.18256,3.18257 c 14.00328,14.00328 32.93954,21.32318 52.67143,21.16405 1.59129,0 3.3417,0 5.09211,0.15913 37.07687,2.06866 67.1521,31.66651 70.17553,68.74338 3.97821,46.78369 -34.68995,85.45184 -81.31451,81.63277 -36.75861,-2.86431 -66.0382,-33.41693 -68.266,-70.33467 z"/><path fill="#0A0A0A" d="m 228.29238,306.3456 c 41.53246,0 75.10851,33.73517 75.10851,75.42676 0,41.69159 -33.57605,75.42677 -75.10851,75.42677 -41.53246,0 -75.10851,-33.73518 -75.10851,-75.42677 0,-41.69159 33.57605,-75.42676 75.10851,-75.42676 z"/></svg>
+          <span class="wm" style="font-size:.95rem">Infinite Battery</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)">Products · Standards · Repairability · <span style="color:var(--signal)">Contact</span></div>
+      </div>
+      <div style="padding:clamp(1.8rem,5vw,3.5rem)">
+        <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:1rem">For fleet operators &amp; OEMs</div>
+        <div class="d-xl" style="max-width:16ch;margin-bottom:1.2rem">The battery you can open.</div>
+        <p class="b-spec" style="margin-bottom:1.8rem">Connected, repairable, fire-resistant lithium-ion packs for e-bikes and light EVs — engineered to meet both UL and EN 50604, and built for the 2027 EU repairability regulation before it arrives.</p>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+          <a class="btn btn-primary">Request a quote <span class="arr">→</span></a>
+          <a class="btn btn-ghost">Download datasheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOPHON ============ -->
+<footer>
+  <div class="wrap colophon">
+    <div class="row">
+      <span>Infinite Battery — Design System · <span class="red">Vol. 1</span></span>
+      <span>Space Grotesk · Source Serif 4 · IBM Plex Mono</span>
+      <span>Capacité SAS · 200 rue de la Croix de Nivert · 75015 Paris</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
