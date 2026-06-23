@@ -17,7 +17,9 @@
       "Bash(cp \"/Users/alexandrevallette/Library/CloudStorage/GoogleDrive-alex@gouach.com/Shared drives/Infinite/DOCUMENTATION/Infinite_Mega_13s8p_2170/images/cover.png\" assets/images/specs/mega.png)",
       "Bash(cp /tmp/cargo_unpacked/word/media/image1.jpg assets/images/specs/cargo.jpg)",
       "Bash(curl -s -o /dev/null -w \"mega.png:  %{http_code}\\\\n\" http://localhost:8787/assets/images/specs/mega.png)",
-      "Bash(curl -s -o /dev/null -w \"cargo.jpg: %{http_code}\\\\n\" http://localhost:8787/assets/images/specs/cargo.jpg)"
+      "Bash(curl -s -o /dev/null -w \"cargo.jpg: %{http_code}\\\\n\" http://localhost:8787/assets/images/specs/cargo.jpg)",
+      "Bash(cp \"/Users/alexandrevallette/Desktop/design_system.html\" design-system.html)",
+      "Bash(curl -s -o /dev/null -w \"design-system.html: %{http_code}\\\\n\" http://localhost:8787/design-system.html)"
     ]
   }
 }
