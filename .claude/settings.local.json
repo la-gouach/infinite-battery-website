@@ -3,7 +3,21 @@
     "allow": [
       "Bash(python3 -m http.server 8787)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8787/)",
-      "Bash(curl -s http://localhost:8787/)"
+      "Bash(curl -s http://localhost:8787/)",
+      "Read(//Users/alexandrevallette/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ae4fddca-b225-44cb-b2de-d8c53ac06800/a048f94b-2ea3-4aeb-80fb-70dc6dafab77/skills/docx/**)",
+      "Bash(extract-text \"/Users/alexandrevallette/Library/CloudStorage/GoogleDrive-alex@gouach.com/Shared drives/Infinite/DOCUMENTATION/Infinite_Mega_13s8p_2170/Infinite Battery Mega Specifications \\(13s8p_2170\\).docx\")",
+      "Read(//Users/alexandrevallette/Library/CloudStorage/GoogleDrive-alex@gouach.com/Shared drives/Infinite/DOCUMENTATION/**)",
+      "Bash(pandoc \"Infinite_Mega_13s8p_2170/Infinite Battery Mega Specifications \\(13s8p_2170\\).docx\" -o /tmp/mega.md)",
+      "Bash(python3 '/Users/alexandrevallette/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ae4fddca-b225-44cb-b2de-d8c53ac06800/a048f94b-2ea3-4aeb-80fb-70dc6dafab77/skills/docx/scripts/office/unpack.py' '/Users/alexandrevallette/Library/CloudStorage/GoogleDrive-alex@gouach.com/Shared drives/Infinite/DOCUMENTATION/Infinite_Mega_13s8p_2170/Infinite Battery Mega Specifications \\(13s8p_2170\\).docx' /tmp/mega_unpacked/)",
+      "Bash(python3 /tmp/extract.py /tmp/cargo_unpacked/word/document.xml)",
+      "Bash(curl -s -o /dev/null -w \"spec.html: %{http_code}\\\\n\" http://localhost:8787/spec/spec.html)",
+      "Bash(curl -s -o /dev/null -w \"data.js:   %{http_code}\\\\n\" http://localhost:8787/spec/data.js)",
+      "Bash(node -e ' *)",
+      "Bash(echo \"=== Cargo embedded media ===\" *)",
+      "Bash(cp \"/Users/alexandrevallette/Library/CloudStorage/GoogleDrive-alex@gouach.com/Shared drives/Infinite/DOCUMENTATION/Infinite_Mega_13s8p_2170/images/cover.png\" assets/images/specs/mega.png)",
+      "Bash(cp /tmp/cargo_unpacked/word/media/image1.jpg assets/images/specs/cargo.jpg)",
+      "Bash(curl -s -o /dev/null -w \"mega.png:  %{http_code}\\\\n\" http://localhost:8787/assets/images/specs/mega.png)",
+      "Bash(curl -s -o /dev/null -w \"cargo.jpg: %{http_code}\\\\n\" http://localhost:8787/assets/images/specs/cargo.jpg)"
     ]
   }
 }

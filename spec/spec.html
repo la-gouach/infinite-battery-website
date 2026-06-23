@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinite Battery — Specification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0A0A;
+  --paper:#FFFFFF;
+  --signal:#5B2BD6;
+  --signal-deep:#4A1FB8;
+  --grid:#E6E5E0;
+  --rule:#1A1A1A;
+  --mute:#6B6B66;
+  --mute-soft:#9A9A94;
+  --display:'Space Grotesk',-apple-system,sans-serif;
+  --body:'Source Serif 4',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:#E9E9E6;color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;font-feature-settings:"onum" 1,"pnum" 1}
+
+/* ---------- Screen toolbar ---------- */
+.toolbar{
+  position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  gap:1rem;flex-wrap:wrap;background:var(--ink);color:#fff;padding:.7rem 1.2rem;
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;
+}
+.toolbar .brand{color:var(--signal);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.toolbar .group{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.toolbar select,.toolbar button{
+  font-family:var(--mono);font-size:.74rem;border:1px solid #444;background:#1d1d1d;color:#fff;
+  padding:.4rem .7rem;border-radius:2px;cursor:pointer;
+}
+.toolbar button.print{background:var(--signal);border-color:var(--signal)}
+.toolbar button.print:hover{background:var(--signal-deep)}
+.toolbar select:hover{border-color:#777}
+
+/* ---------- Page / sheet ---------- */
+.sheet{
+  background:var(--paper);width:210mm;min-height:297mm;margin:1.5rem auto;
+  padding:18mm 16mm;box-shadow:0 2px 20px rgba(0,0,0,.14);
+}
+
+/* ---------- Cover ---------- */
+.cover{border-bottom:2px solid var(--ink);padding-bottom:1.6rem;margin-bottom:1.8rem}
+.cover-grid{display:grid;grid-template-columns:1fr 0.85fr;gap:1.6rem;align-items:center}
+.cover-text{min-width:0}
+.cover-figure{margin:0}
+.cover-figure img{width:100%;height:auto;display:block}
+.cover-figure .placeholder{
+  width:100%;aspect-ratio:4/3;border:1px dashed var(--mute-soft);background:rgba(91,43,214,.03);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute-soft);text-align:center;padding:1rem;
+}
+.cover-figure .placeholder span:first-child{font-size:1.4rem;color:var(--mute-soft)}
+.cover .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:1rem}
+.cover h1{font-family:var(--display);font-weight:700;font-size:2.6rem;letter-spacing:-.02em;line-height:1.02}
+.cover .config{font-family:var(--mono);font-size:1rem;color:var(--mute);margin-top:.3rem}
+.cover .meta{display:flex;gap:2.2rem;flex-wrap:wrap;margin-top:1.3rem;font-family:var(--mono);font-size:.72rem;color:var(--mute)}
+.cover .meta b{display:block;color:var(--ink);font-weight:600;font-size:.82rem;margin-top:.15rem}
+.cover .legal{font-family:var(--mono);font-size:.66rem;color:var(--mute-soft);margin-top:1.2rem;line-height:1.5}
+
+/* ---------- Sections ---------- */
+section{margin-top:1.7rem}
+h2{font-family:var(--display);font-weight:600;font-size:1.18rem;letter-spacing:-.01em;
+   padding-bottom:.4rem;border-bottom:1px solid var(--grid);margin-bottom:.85rem;
+   display:flex;align-items:baseline;gap:.6rem}
+h2::before{content:attr(data-n);font-family:var(--mono);font-size:.72rem;color:var(--signal);font-weight:600}
+h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin:1.1rem 0 .5rem}
+p{margin-bottom:.6rem;max-width:62em}
+p.lead{color:var(--ink)}
+
+/* ---------- Lists ---------- */
+ul{list-style:none;margin:.3rem 0 .7rem}
+ul li{position:relative;padding-left:1.1rem;margin-bottom:.32rem}
+ul li::before{content:"—";position:absolute;left:0;color:var(--signal)}
+ul li b{font-weight:600}
+.feature-group{margin-bottom:.55rem}
+.feature-group .gname{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);font-weight:600}
+
+/* ---------- Data tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin:.4rem 0 .6rem}
+table caption{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--signal);text-align:left;padding-bottom:.45rem}
+th{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);text-align:left;border-bottom:2px solid var(--ink);padding:.45rem .6rem}
+td{border-bottom:1px solid var(--grid);padding:.45rem .6rem;vertical-align:top}
+td.lbl{font-family:var(--mono);font-size:.72rem;color:var(--ink);white-space:nowrap;width:38%}
+td.val{font-family:var(--body)}
+tr:nth-child(even) td{background:rgba(91,43,214,.025)}
+
+/* ---------- Inline figure ---------- */
+.figure{margin:.6rem 0 .8rem}
+.figure img{max-width:62%;height:auto;display:block;border:1px solid var(--grid)}
+.figure figcaption{font-family:var(--mono);font-size:.66rem;color:var(--mute);margin-top:.4rem}
+.figure figcaption b{color:var(--signal);font-weight:600}
+
+/* ---------- Callout ---------- */
+.callout{border-left:3px solid var(--signal);background:rgba(91,43,214,.04);padding:.7rem .9rem;margin:.7rem 0;font-size:.84rem}
+.callout .t{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-bottom:.25rem}
+
+/* ---------- Footer note per sheet ---------- */
+.sheet-foot{margin-top:2rem;border-top:1px solid var(--grid);padding-top:.7rem;
+  font-family:var(--mono);font-size:.64rem;color:var(--mute-soft);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+.break{break-before:page}
+
+/* ---------- Print ---------- */
+@page{size:A4;margin:14mm}
+@media print{
+  body{background:#fff}
+  .toolbar{display:none}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  section,table,ul,.callout{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="brand">Infinite Battery · Specification</span>
+  <div class="group">
+    <label>Model
+      <select id="modelSelect"></select>
+    </label>
+    <button class="print" onclick="window.print()">⎙ Print / Save PDF</button>
+  </div>
+</div>
+
+<main class="sheet" id="sheet"><!-- rendered by JS --></main>
+
+<script src="data.js"></script>
+<script>
+/* ----------------------------------------------------------------------------
+   Rendering: boilerplate prose is written inline here (the "template");
+   variable data comes from MODELS in data.js. Edit prose once, here.
+   -------------------------------------------------------------------------- */
+
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function rows(arr){
+  return arr.map(([l,v])=>`<tr><td class="lbl">${esc(l)}</td><td class="val">${esc(v)}</td></tr>`).join("");
+}
+
+function render(m){
+  const cells = m.series * m.parallel;
+  return `
+  <header class="cover">
+    <div class="cover-grid">
+      <div class="cover-text">
+        <div class="kicker">Technical specification · ${esc(m.config)}</div>
+        <h1>Infinite Battery ${esc(m.name)}</h1>
+        <div class="config">${esc(m.config)} · ${cells} × ${esc(m.cellFormat)} cells · Version ${esc(m.version)}</div>
+        <div class="meta">
+          <span>Author<b>${esc(m.author)}</b></span>
+          <span>Date<b>${esc(m.date)}</b></span>
+          <span>Configuration<b>${m.series}s${m.parallel}p</b></span>
+        </div>
+      </div>
+      <figure class="cover-figure">
+        ${m.image
+          ? `<img src="${esc(m.image)}" alt="Infinite Battery ${esc(m.name)} — ${esc(m.config)}" onerror="this.parentNode.innerHTML='&lt;div class=\\'placeholder\\'&gt;&lt;span&gt;⌷&lt;/span&gt;&lt;span&gt;Battery image&lt;/span&gt;&lt;/div&gt;'">`
+          : `<div class="placeholder"><span>⌷</span><span>Battery image</span></div>`}
+      </figure>
+    </div>
+    <div class="legal">Infinite Battery is a brand of Capacité, SAS — based in France · Business ID: 844405274 · 200 rue de la Croix de Nivert, 75015 Paris, France</div>
+  </header>
+
+  <section>
+    <h2 data-n="01">General system description</h2>
+    <p class="lead">This document provides information about the lithium rechargeable battery designed by Capacité, SAS under the brand Infinite Battery. The battery is called <b>Infinite Battery ${esc(m.config)}</b>. It is designed as a ${m.series}s${m.parallel}p battery using cylindrical ${esc(m.cellFormat)} cells and works with any generic motor controller for electric-bike applications.</p>
+  </section>
+
+  <section>
+    <h2 data-n="02">System features</h2>
+    <div class="feature-group"><span class="gname">Connectivity</span>
+      <ul>
+        <li>Compatibility with multiple system brands</li>
+        <li>Ability to update the battery firmware over Wifi</li>
+        <li>Support of CAN-Bus communication</li>
+        <li>Support for UART communication</li>
+      </ul>
+    </div>
+    <div class="feature-group"><span class="gname">Waterproof</span>
+      <ul>
+        <li>Ingress protection grade: IP67</li>
+        <li>Gore-Tex breathing valve to balance pressure</li>
+        <li>Internal humidity sensor</li>
+        <li>No button to prevent failure and ingress (tap-to-wake via accelerometer)</li>
+      </ul>
+    </div>
+    <div class="feature-group"><span class="gname">Fireproof</span>
+      <ul>
+        <li>Casing can withstand an internal runaway without flames outside the casing for several minutes, provided the venting valves are not obstructed</li>
+        <li>Venting valve to expel hot gases</li>
+        <li>Use of UL-V0 plastic</li>
+      </ul>
+    </div>
+    <div class="feature-group"><span class="gname">Repairability &amp; recyclability</span>
+      <ul>
+        <li>Patented weld-less technology that saves time on assembly and disassembly</li>
+        <li>Wireless connection of the BMS, enabling easy servicing</li>
+        <li>No glue</li>
+        <li>Plastic parts and connectors designed to be easily replaceable</li>
+      </ul>
+    </div>
+
+    <h3>Key characteristics</h3>
+    <ul>
+      <li>Nominal output voltage is <b>${esc(m.keyFeatures.nominalVoltage)}</b>.</li>
+      <li>Typical capacity is <b>${esc(m.keyFeatures.typicalCapacity)}</b>.</li>
+      <li>Supports <b>${esc(m.keyFeatures.dischargeCurrent)}</b>.</li>
+      <li>Voltage protection: over-voltage (OVP) and under-voltage (UVP).</li>
+      <li>Current protection: discharge and charge over-current protection (OCP).</li>
+      <li>Short-circuit protection (SCP).</li>
+      <li>Temperature protection: over/under-temperature in charge and discharge (OTPC, OTPD, UTPC, UTPD).</li>
+      <li>Transient voltage surge protection.</li>
+      <li>Power-on soft start to prevent inrush current.</li>
+      <li>Deep-sleep function (&lt; 1.5 mW) for long storage periods.</li>
+      <li>Under-voltage lock-out.</li>
+      <li>RGB LED to indicate SOC status, charging and error codes.</li>
+      <li>Dissipative cell-balancing mechanism.</li>
+    </ul>
+
+    <div class="callout">
+      <div class="t">Warnings &amp; cautions</div>
+      <ul>
+        <li>The battery must not be modified in any manner. It contains safety and protection devices which, if damaged, may cause it to generate heat, rupture or fire.</li>
+        <li>Do not expose the battery to, or put it in direct contact with, heat or fire.</li>
+        <li>Do not pierce, prick, crush or drop the battery.</li>
+        <li>Do not expose the battery to corrosive liquids.</li>
+        <li>Do not short-circuit: never reverse-connect or short the positive (+) and negative (-) terminals.</li>
+        <li>Only a 54.6 V charger should be used with the battery.</li>
+        <li>Keep children away from the battery.</li>
+        <li>Keep the battery dry and clean. Clean dirty connections with a dry, clean towel.</li>
+        <li>Do not leave the battery discharged for long periods of non-use.</li>
+        <li>Use the battery only in its designated application, and remove it from the vehicle when not in use.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="break">
+    <h2 data-n="03">Mechanical characteristics</h2>
+    <table>
+      <caption>Table 1 · General mechanical information</caption>
+      <thead><tr><th>Item</th><th>Specification</th></tr></thead>
+      <tbody>${rows(m.mechanical)}</tbody>
+    </table>
+
+    <h3>Connector type &amp; pin definition</h3>
+    <p>The discharge connector has 5 pins:</p>
+    <ul>
+      <li><b>P-</b> — power negative terminal</li>
+      <li><b>CANL</b> — CAN bus communication</li>
+      <li><b>CANH</b> — CAN bus communication</li>
+      <li><b>VEHICLE DETECT</b> — shorted to (-) on the bike rack, lets the battery detect whether it is plugged on a bike</li>
+      <li><b>P+</b> — power positive terminal</li>
+    </ul>
+    <p>${esc(m.chargeConnector.summary)}</p>
+    <ul>${m.chargeConnector.pins.map(p=>`<li><b>${esc(p)}</b></li>`).join("")}</ul>
+    <figure class="figure">
+      <img src="${esc(SHARED.pinout)}" alt="Connector pinout — discharge and charge ports">
+      <figcaption><b>Fig.</b> Discharge connector pinout (pins 1–5).</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 data-n="04">Electrical characteristics</h2>
+    <table>
+      <caption>Table 2 · Electrical specification</caption>
+      <thead><tr><th>Item</th><th>Specification</th></tr></thead>
+      <tbody>${rows(m.electrical)}</tbody>
+    </table>
+  </section>
+
+  <section class="break">
+    <h2 data-n="05">Battery protection settings</h2>
+    <p>Infinite Battery ${esc(m.config)} provides three levels of protection:</p>
+    <ul>
+      <li><b>High-level software protection</b> implemented on the microcontroller, which handles high-level protection scenarios and can control the MOSFETs.</li>
+      <li><b>Intermediate hardware protection</b> via a bq769x2 integrated circuit from Texas Instruments, specialized in battery monitoring. This level supersedes the previous one and is much faster.</li>
+      <li><b>Low-level hardware protection</b> via a dedicated SMD fuse from Bel Fuse integrated in the BMS.</li>
+    </ul>
+
+    <h3>Battery events</h3>
+    <ul>
+      <li><b>INACTIVITY TIMEOUT</b> — time during which the battery is not used (not charging or discharging). After a set period, the battery goes to sleep to save its charge.</li>
+      <li><b>UNDER VOLTAGE</b> — triggered if the voltage of one or more cells drops below the minimum threshold.</li>
+      <li><b>CAN WAKEUP</b> — wake-up call from the vehicle connected over CAN.</li>
+      <li><b>BQ CHARGER</b> — a charger has been detected.</li>
+      <li><b>BQ CURRENT</b> — current is drawn from the battery.</li>
+      <li><b>PERIODIC WAKEUP</b> — the battery wakes up for 5 minutes every 24 hours.</li>
+      <li><b>ON BIKE / OFF BIKE</b> — the battery is connected to / disconnected from the vehicle.</li>
+    </ul>
+
+    <h3>Battery off states</h3>
+    <ul>
+      <li><b>SLEEP</b> — light sleep mode: disconnected from the network, monitoring only data essential to safe internal operation.</li>
+      <li><b>DEEP SLEEP</b> — ultra-low-power (ULP) saving mode that only monitors wake-up events.</li>
+      <li><b>UVLO</b> — entered when one or more cells are under voltage. The deepest shutdown state: the battery can only be woken by plugging in a charger, and consumes almost no energy.</li>
+    </ul>
+
+    <h3>Battery on states</h3>
+    <ul>
+      <li><b>INIT</b> — initialization of the battery.</li>
+      <li><b>IDLE</b> — inactive (no current drawn or delivered).</li>
+      <li><b>CHARGE</b> — receiving current.</li>
+      <li><b>DISCHARGE</b> — delivering current.</li>
+      <li><b>ERROR</b> — the battery emits an error.</li>
+      <li><b>SHUTDOWN</b> — the battery is going to sleep.</li>
+    </ul>
+
+    <h3>Protection functions</h3>
+    <ul>
+      <li><b>Over-voltage (OV)</b> — when the pack exceeds the preset maximum output voltage, the BMS cuts the main power loop to prevent thermal runaway.</li>
+      <li><b>Under-voltage (UV)</b> — when the pack drops below the preset minimum, the BMS cuts the loop to prevent over-discharge damage.</li>
+      <li><b>Over-current in charge (COC)</b> and <b>discharge (DOC)</b> — when current exceeds the preset maximum, the BMS cuts the loop to prevent thermal runaway.</li>
+      <li><b>Over-temperature in charge (OTC)</b> and <b>discharge (DOT)</b> — when temperature exceeds the preset maximum, the BMS cuts the loop.</li>
+      <li><b>Under-temperature in charge (COT)</b> and <b>discharge (DUT)</b> — when temperature is below the recommended value, the BMS cuts the loop to protect the cells.</li>
+      <li><b>Surge protection</b> — protects cells from damage by extreme high-voltage surges.</li>
+      <li><b>Back-EMF protection</b> — a dedicated circuit protects the discharge loop from the counter-electromotive force induced by inductive loads such as motors.</li>
+    </ul>
+
+    <h3>Power-on soft start</h3>
+    <p>Power applied to an inductive device such as a motor causes a large peak inrush current due to the high dv/dt across the controller's input filter capacitors. The Infinite Battery BMS provides a soft-start technique that limits inrush under safer voltage and current ramps, avoiding unexpected protection events and the large inrush current otherwise induced between the controller and the cells.</p>
+
+    <h3>Bleeding function</h3>
+    <p>The battery constantly monitors each cell and can balance a parallel group if its voltage is too high, allowing the pack to automatically recover from an OV state.</p>
+
+    <h3>Under-voltage lock-out (UVLO)</h3>
+    <p>When a battery sits at low voltage for a very long period, its voltage may drop below the discharge cut-off. It then needs to be charged with a very small current. This operation must be performed by Capacité, so the battery should be returned.</p>
+
+    <h3>Power modes and power consumption</h3>
+    <p>While operational, the BMS consumes 350 mW; when idle it enters deep-sleep at 1.5 mW. The battery can therefore be stored for years at storage voltage.</p>
+  </section>
+
+  <section class="break">
+    <h2 data-n="06">Algorithms &amp; certifications</h2>
+    <table>
+      <caption>Table 3 · On-board algorithms</caption>
+      <thead><tr><th>Item</th><th>Specification</th></tr></thead>
+      <tbody>${rows(m.algorithms)}</tbody>
+    </table>
+    <table>
+      <caption>Table 4 · Certifications</caption>
+      <thead><tr><th>Requirement</th><th>Value</th><th>Date</th></tr></thead>
+      <tbody>${CERTIFICATIONS.map(c=>`<tr><td class="lbl">${esc(c)}</td><td class="val"></td><td class="val"></td></tr>`).join("")}</tbody>
+    </table>
+    <p style="font-family:var(--mono);font-size:.72rem;color:var(--mute)">The CAN protocol is provided as a DBC file.</p>
+  </section>
+
+  <section class="break">
+    <h2 data-n="07">Usage instructions &amp; safety regulations</h2>
+
+    <h3>General safety guidelines</h3>
+    <ul>
+      <li><b>Use dedicated chargers</b> — only chargers designed for this model, to avoid overcharging, overheating or damage.</li>
+      <li><b>Follow operating conditions</b> — operate within the specified temperature, voltage and current ranges.</li>
+      <li><b>Avoid physical damage</b> — do not drop, crush or puncture the battery.</li>
+      <li><b>Proper storage</b> — store in a cool, dry place within the specified temperature ranges.</li>
+      <li><b>Disposal</b> — dispose of in accordance with local regulations. Do not incinerate or place in general waste.</li>
+    </ul>
+
+    <h3>Prohibited actions</h3>
+    <ul>
+      <li><b>Short-circuiting</b> — never connect the terminals with metal objects or store with metal items.</li>
+      <li><b>Heating or burning</b> — exposure to high temperatures or fire can melt the separator and ignite the electrolyte.</li>
+      <li><b>Using near heat sources</b> — do not use or store near fire, furnaces, or above 80 °C.</li>
+      <li><b>Moistening or submerging</b> — do not expose to water or moisture.</li>
+      <li><b>Reversing polarity</b> — do not connect (+) and (-) in reverse.</li>
+      <li><b>Charging near heat or in direct sunlight</b> — may damage protective circuits.</li>
+      <li><b>Using non-dedicated chargers</b> — may cause loss of protective functions.</li>
+      <li><b>Damaging the battery</b> — crushing, puncturing or bending compromises safety features.</li>
+    </ul>
+
+    <h3>Additional safety notes</h3>
+    <ul>
+      <li><b>Handling</b> — avoid mechanical stress or damage to the casing.</li>
+      <li><b>Inspection before use</b> — check for damage, leakage or swelling; do not use a damaged battery.</li>
+      <li><b>Emergency procedures</b> — in case of leakage, overheating or smoke, stop using the battery, move it to a safe, well-ventilated outdoor area, and follow local emergency protocols.</li>
+    </ul>
+
+    <h3>Dangerous modes</h3>
+    <p>The customer acknowledges the following potential dangers associated with the use and operation of the battery:</p>
+    <ul>
+      <li><b>Chemical, electrical or arc-related injury</b> — voltages above 36 V DC can cause severe harm. Take conservative precautions to avoid electrical injuries.</li>
+      <li><b>Chemical risks from electrolyte</b> — the electrolyte poses chemical hazards if exposed by damage or leakage.</li>
+      <li><b>Short circuits and thermal runaway</b> — improper handling may lead to arcs, explosions or thermal runaway. Select appropriate PPE accordingly.</li>
+    </ul>
+  </section>
+
+  <div class="sheet-foot">
+    <span>Infinite Battery ${esc(m.name)} · ${esc(m.config)} · ${esc(m.version)}</span>
+    <span>Capacité SAS · Confidential — for evaluation purposes</span>
+  </div>
+  `;
+}
+
+function load(key){
+  const m = MODELS[key];
+  document.getElementById("sheet").innerHTML = render(m);
+  document.title = `Infinite Battery ${m.name} — Specification ${m.config}`;
+  history.replaceState(null,"",`?model=${key}`);
+}
+
+// Build model selector
+const sel = document.getElementById("modelSelect");
+Object.keys(MODELS).forEach(k=>{
+  const o=document.createElement("option");
+  o.value=k; o.textContent=`Infinite Battery ${MODELS[k].name} (${MODELS[k].config})`;
+  sel.appendChild(o);
+});
+sel.addEventListener("change", e=>load(e.target.value));
+
+// Initial model from URL (?model=cargo) or default to first
+const params = new URLSearchParams(location.search);
+const start = MODELS[params.get("model")] ? params.get("model") : Object.keys(MODELS)[0];
+sel.value = start;
+load(start);
+</script>
+</body>
+</html>
