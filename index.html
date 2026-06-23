@@ -107,6 +107,29 @@ p.body i{font-style:italic}
   .ops-fig{flex:none;width:100%}
 }
 
+/* ---------- Dashboard carousel ---------- */
+.carousel{margin-top:2rem}
+.carousel-frame{position:relative;overflow:hidden}
+.carousel-track{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.carousel-track img{width:100%;flex:0 0 100%;height:auto;display:block}
+.carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(10,10,10,.32);color:#fff;font-family:var(--mono);font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.45;transition:opacity .2s,background .2s;backdrop-filter:blur(2px);
+}
+.carousel-frame:hover .carousel-arrow{opacity:.85}
+.carousel-arrow:hover{opacity:1;background:var(--signal)}
+.carousel-arrow.prev{left:.8rem}
+.carousel-arrow.next{right:.8rem}
+.carousel-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:.85rem 0}
+.carousel-cap{font-family:var(--mono);font-size:.74rem;line-height:1.55;color:var(--mute)}
+.carousel-cap b{color:var(--signal);font-weight:600}
+.carousel-dots{display:flex;gap:.45rem;flex:none}
+.carousel-dots button{width:7px;height:7px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--grid);transition:background .2s,transform .2s}
+.carousel-dots button.active{background:var(--signal);transform:scale(1.25)}
+
 /* ---------- Lineup figure ---------- */
 .lineup-fig{margin-bottom:2.4rem;width:50%;margin-left:auto;margin-right:auto;}
 .lineup-fig img{width:100%;height:auto;display:block}
@@ -238,10 +261,38 @@ table.data a:hover{text-decoration:underline}
   </div>
 </section>
 
+<!-- ============ CONNECTED DATA / FLEET ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="03">Connected fleet</div>
+    <h2 class="sec">Every pack reports its own health</h2>
+    <p class="lede" style="color:var(--ink)">Each battery streams its telemetry over Wifi — no gateway, no cabling. State of charge and health, per-cell voltages, temperature, humidity, location and error events all land in the Infinite portal, where they become a single live view of an entire fleet.</p>
+    <p style="max-width:var(--measure);margin-bottom:1.1rem">Operators stop guessing. A weak cell is flagged before it fails, a battery drifting out of its temperature envelope raises an event, and a lost pack is located on a map. Maintenance becomes <b>predictive instead of reactive</b>, warranty claims are backed by data, and every pack carries a complete history from assembly to end of life — the same record that makes on-site repair and second-life recovery possible.</p>
+
+    <div class="carousel" id="dashCarousel">
+      <div class="carousel-frame">
+        <div class="carousel-track">
+          <img src="assets/images/dashboard/dashboard_1.jpeg" alt="Fleet overview — every battery, status, firmware and daily activity" loading="lazy">
+          <img src="assets/images/dashboard/dashboard_2.jpeg" alt="Data history — state of charge, cell voltages and temperatures over time" loading="lazy">
+          <img src="assets/images/dashboard/dashboard_3.jpeg" alt="Live view — per-cell voltages, current, charge, temperature and humidity" loading="lazy">
+          <img src="assets/images/dashboard/dashboard_4.jpeg" alt="Battery events — anomalies by type and severity across the fleet" loading="lazy">
+          <img src="assets/images/dashboard/dashboard_5.jpeg" alt="Battery location — geolocation of an individual pack" loading="lazy">
+        </div>
+        <button class="carousel-arrow prev" aria-label="Previous">‹</button>
+        <button class="carousel-arrow next" aria-label="Next">›</button>
+      </div>
+      <div class="carousel-foot">
+        <div class="carousel-cap" id="dashCap"></div>
+        <div class="carousel-dots" id="dashDots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PRODUCTS ============ -->
 <section id="products">
   <div class="wrap">
-    <div class="eyebrow" data-n="03">Product line</div>
+    <div class="eyebrow" data-n="04">Product line</div>
     <h2 class="sec">Three packs, one architecture</h2>
     <p class="lede">Datasheets and 3D models (STEP) available for download per model. Specifications below are indicative — request a sample for full validation data.</p>
 
@@ -284,7 +335,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ CTA ============ -->
 <section>
   <div class="wrap">
-    <div class="eyebrow" data-n="04">Evaluation</div>
+    <div class="eyebrow" data-n="05">Evaluation</div>
     <div class="cta-block">
       <div class="copy">
         <h3>Request a test sample</h3>
@@ -298,7 +349,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ THESIS ============ -->
 <section class="thesis">
   <div class="wrap">
-    <div class="eyebrow" data-n="05">Thesis</div>
+    <div class="eyebrow" data-n="06">Thesis</div>
     <h2 class="sec">We're building an asset</h2>
     <p>Most battery suppliers sell a sealed black box and move on. We're building the opposite: an <b>open, certified, data-rich platform</b> that any brand or technician can plug into.</p>
     <p>Patents, certifications, fleet telemetry, and a repair layer compound into one thing — an asset that outlives any single product cycle, and a head start on the repairability rules coming to the EU.</p>
@@ -315,6 +366,57 @@ table.data a:hover{text-decoration:underline}
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  const root = document.getElementById("dashCarousel");
+  if(!root) return;
+  const track = root.querySelector(".carousel-track");
+  const slides = track.querySelectorAll("img");
+  const capEl = document.getElementById("dashCap");
+  const dotsEl = document.getElementById("dashDots");
+  const total = slides.length;
+  let i = 0, timer;
+
+  const captions = [
+    "<b>FIG. 4.</b> Fleet overview — every pack with its status, firmware and daily activity at a glance.",
+    "<b>FIG. 4.</b> Data history — state of charge, per-cell voltages and temperatures over time.",
+    "<b>FIG. 4.</b> Live view — per-cell voltages, current, charge, temperature and humidity in real time.",
+    "<b>FIG. 4.</b> Battery events — anomalies grouped by type and severity across the fleet.",
+    "<b>FIG. 4.</b> Battery location — each pack geolocated, so a lost battery is never lost for long."
+  ];
+
+  // dots
+  for(let d=0; d<total; d++){
+    const b=document.createElement("button");
+    b.setAttribute("aria-label","Go to slide "+(d+1));
+    b.addEventListener("click",()=>{go(d);reset();});
+    dotsEl.appendChild(b);
+  }
+  const dots = dotsEl.querySelectorAll("button");
+
+  function go(n){
+    i = (n+total)%total;
+    track.style.transform = "translateX(-"+(i*100)+"%)";
+    capEl.innerHTML = captions[i];
+    dots.forEach((d,k)=>d.classList.toggle("active",k===i));
+  }
+  function next(){go(i+1);}
+  function prev(){go(i-1);}
+  function reset(){clearInterval(timer);timer=setInterval(next,5000);}
+
+  root.querySelector(".next").addEventListener("click",()=>{next();reset();});
+  root.querySelector(".prev").addEventListener("click",()=>{prev();reset();});
+
+  // pause on hover
+  const frame = root.querySelector(".carousel-frame");
+  frame.addEventListener("mouseenter",()=>clearInterval(timer));
+  frame.addEventListener("mouseleave",reset);
+
+  go(0);
+  reset();
+})();
+</script>
 
 </body>
 </html>
