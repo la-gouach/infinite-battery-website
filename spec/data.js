@@ -84,9 +84,23 @@ const MODELS = {
     ],
 
     // Connector wiring — discharge is shared, charge differs by model
+
+    dischargeConnector: {
+      summary: "The discharge connector has 10 pins with redundancy:",
+      pins: {
+        1: "P-", 
+        2: "CANL", 
+        3: "CANH", 
+        4: "VEHICLE DETECT", 
+        5: "P+",
+        6: "P-", 
+        7: "CANL", 
+        8: "CANH", 
+        9: "CHARGER DETECT", 
+        10: "P+"},
+    },
     chargeConnector: {
-      summary: "The charge connector has 5 pins:",
-      pins: ["P-", "CANL", "CANH", "CHARGER DETECT", "P+"],
+      summary: "There is no charger connector, the charge is made through the discharge pins.",
     },
 
     drawings: [
@@ -168,9 +182,18 @@ const MODELS = {
       ["DOD control",    "NO"],
     ],
 
+    dischargeConnector: {
+      summary: "The discharge connector has 5 pins:",
+      pins: {
+        1: "P-", 
+        2: "CANL", 
+        3: "CANH", 
+        4: "VEHICLE DETECT", 
+        5: "P+"},
+    },
     chargeConnector: {
-      summary: "The charge connector is a 3-pin connector (JL-F-Z3105AM):",
-      pins: ["P-", "CANH", "P+"],
+      summary: "The charge connector has 3 pins:",
+      pins: ["P-", "CHARGER DETECT", "P+"],
     },
 
     drawings: [
@@ -253,9 +276,18 @@ const MODELS = {
       ["DOD control",    "NO"],
     ],
 
+    dischargeConnector: {
+      summary: "The discharge connector has 5 pins:",
+      pins: {
+        1: "P-", 
+        2: "CANL", 
+        3: "CANH", 
+        4: "VEHICLE DETECT", 
+        5: "P+"},
+    },
     chargeConnector: {
-      summary: "The charge connector is a 3-pin connector (JL-F-Z3105AM):",
-      pins: ["P-", "CANH", "P+"],
+      summary: "The charge connector has 3 pins:",
+      pins: ["P-", "CHARGER DETECT", "P+"],
     },
 
     drawings: [
