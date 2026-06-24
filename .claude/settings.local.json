@@ -22,7 +22,8 @@
       "Bash(curl -s -o /dev/null -w \"design-system.html: %{http_code}\\\\n\" http://localhost:8787/design-system.html)",
       "Bash(sips -g pixelWidth -g pixelHeight dashboard_1.jpeg)",
       "Bash(python3 -c ' *)",
-      "Bash(python3)"
+      "Bash(python3)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8787/)"
     ]
   }
 }
