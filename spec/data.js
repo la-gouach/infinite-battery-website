@@ -18,6 +18,7 @@ const MODELS = {
     author: "Alexandre Vallette",
     date: "16/03/2026",
     image: "images/mega/mega_purple.png",
+    pinout: "images/mega/mega_pinout.png",
 
     // One-line key specs shown in the features section
     keyFeatures: {
@@ -119,6 +120,7 @@ const MODELS = {
     author: "Alexandre Vallette",
     date: "26/01/2026",
     image: "images/cargo/cargo_purple.png",
+    pinout: "images/cargo/cargo_pinout.png",
 
     keyFeatures: {
       nominalVoltage: "46.7 V",
@@ -215,6 +217,7 @@ const MODELS = {
     author: "Alexandre Vallette",
     date: "27/10/2025",
     image: "images/infinite/infinite_purple.png",
+    pinout: "images/infinite/infinite_pinout.png",
 
     keyFeatures: {
       nominalVoltage: "36 V",
@@ -303,6 +306,16 @@ const MODELS = {
 
 // Display order for the model selector — matches the product line table
 const MODEL_ORDER = ["classic", "cargo", "mega"];
+
+// Shared signal → function lookup, used to describe each pin in the pinout table
+const PIN_FUNCTIONS = {
+  "P-":             "Power negative terminal",
+  "P+":             "Power positive terminal",
+  "CANL":           "CAN bus — low",
+  "CANH":           "CAN bus — high",
+  "VEHICLE DETECT": "Vehicle detection — shorted to (−) on the bike rack so the battery knows it is mounted",
+  "CHARGER DETECT": "Charger detection",
+};
 
 // Shared certifications block (same structure for all models)
 const CERTIFICATIONS = ["UN38.3", "EN50604", "ISO13849"];
