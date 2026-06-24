@@ -107,6 +107,18 @@ p.body i{font-style:italic}
   .ops-fig{flex:none;width:100%}
 }
 
+/* ---------- Safety / abuse tests ---------- */
+.tests{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--grid);border:1px solid var(--grid);margin-top:.4rem}
+@media(max-width:1000px){.tests{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.tests{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.tests{grid-template-columns:1fr}}
+.test{background:var(--paper-pure);margin:0;display:flex;flex-direction:column}
+.test img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center;display:block;background:var(--ink)}
+.test figcaption{padding:.85rem .95rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.5;color:var(--mute)}
+.test figcaption .t{display:block;color:var(--signal);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.7rem;margin-bottom:.3rem}
+.tests-note{font-family:var(--mono);font-size:.72rem;color:var(--mute);margin-top:.9rem}
+.tests-note b{color:var(--signal);font-weight:600}
+
 /* ---------- Dashboard carousel ---------- */
 .carousel{margin-top:2rem}
 .carousel-frame{position:relative;overflow:hidden}
@@ -220,10 +232,42 @@ table.data a:hover{text-decoration:underline}
   </div>
 </section>
 
+<!-- ============ SAFETY & RUGGEDNESS ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" data-n="01">Safety &amp; ruggedness</div>
+    <h2 class="sec">Engineered for the worst case</h2>
+    <p class="lede" style="color:var(--ink)">Our safety philosophy is simple: engineer for worst-case scenarios. Through rigorous testing — including crush tests, nail penetration, and fire exposure — we've proven that the Infinite Battery maintains structural integrity and prevents thermal runaway even under catastrophic failure conditions. This isn't just about passing certification — it's about protecting lives and assets in real-world operations.</p>
+    <div class="tests">
+      <figure class="test">
+        <img src="assets/images/tests/crush.gif" alt="Crush test — load applied to the battery casing">
+        <figcaption><span class="t">Crush test</span>A static load is applied to the casing, which retains its structural integrity.</figcaption>
+      </figure>
+      <figure class="test">
+        <img src="assets/images/tests/nail.gif" alt="Nail penetration test triggering thermal runaway">
+        <figcaption><span class="t">Nail penetration</span>A nail triggers an internal short. In the resulting thermal runaway the casing contains the fire for several minutes.</figcaption>
+      </figure>
+      <figure class="test">
+        <img src="assets/images/tests/drop.gif" alt="Drop test onto concrete">
+        <figcaption><span class="t">Drop test</span>Multiple free-falls onto hard concrete; the battery remains fully functional afterwards.</figcaption>
+      </figure>
+      <figure class="test">
+        <img src="assets/images/tests/waterproof.png" alt="Full immersion waterproof test">
+        <figcaption><span class="t">Waterproof</span>Full immersion under 1 m of water, verifying the IP67 sealing.</figcaption>
+      </figure>
+      <figure class="test">
+        <img src="assets/images/tests/vibration.png" alt="Vibration endurance test">
+        <figcaption><span class="t">Vibration</span>Hours of vibration simulating bumpy roads, checking that no internal connection comes loose.</figcaption>
+      </figure>
+    </div>
+    <p class="tests-note"><b>FIG. 2.</b> Abuse-testing campaign on production units — crush, nail penetration, drop, immersion, and vibration. Animated frames are recordings of live tests.</p>
+  </div>
+</section>
+
 <!-- ============ METHOD ============ -->
 <section>
   <div class="wrap">
-    <div class="eyebrow" data-n="01">Method</div>
+    <div class="eyebrow" data-n="02">Method</div>
     <h2 class="sec">What we build, why, and how</h2>
     <div class="cols-3 method">
       <div>
@@ -245,7 +289,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ OPERATIONS ============ -->
 <section>
   <div class="wrap">
-    <div class="eyebrow" data-n="02">Operations</div>
+    <div class="eyebrow" data-n="03">Operations</div>
     <h2 class="sec">A repair network, not a repair service</h2>
     <div class="ops-layout">
       <div class="ops">
@@ -264,7 +308,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ CONNECTED DATA / FLEET ============ -->
 <section>
   <div class="wrap">
-    <div class="eyebrow" data-n="03">Connected fleet</div>
+    <div class="eyebrow" data-n="04">Connected fleet</div>
     <h2 class="sec">Every pack reports its own health</h2>
     <p class="lede" style="color:var(--ink)">Each battery streams its telemetry over Wifi — no gateway, no cabling. State of charge and health, per-cell voltages, temperature, humidity, location and error events all land in the Infinite portal, where they become a single live view of an entire fleet.</p>
     <p style="max-width:var(--measure);margin-bottom:1.1rem">Operators stop guessing. A weak cell is flagged before it fails, a battery drifting out of its temperature envelope raises an event, and a lost pack is located on a map. Maintenance becomes <b>predictive instead of reactive</b>, warranty claims are backed by data, and every pack carries a complete history from assembly to end of life — the same record that makes on-site repair and second-life recovery possible.</p>
@@ -292,13 +336,13 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ PRODUCTS ============ -->
 <section id="products">
   <div class="wrap">
-    <div class="eyebrow" data-n="04">Product line</div>
+    <div class="eyebrow" data-n="05">Product line</div>
     <h2 class="sec">Three packs, one architecture</h2>
     <p class="lede">Datasheets and 3D models (STEP) available for download per model. Request a sample for full validation data.</p>
 
     <figure class="lineup-fig">
       <img src="assets/images/lineup.png" alt="Infinite Battery lineup — Classic, Cargo and Mega">
-      <figcaption><b>FIG. 2.</b> 3 formats in production — Classic, Cargo and Mega — with respectively 30, 52 and 104 cells in 2170 format.</figcaption>
+      <figcaption><b>FIG. 5.</b> 3 formats in production — Classic, Cargo and Mega — with respectively 30, 52 and 104 cells in 2170 format.</figcaption>
     </figure>
 
     <div class="tbl-scroll">
@@ -336,7 +380,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ CTA ============ -->
 <section>
   <div class="wrap">
-    <div class="eyebrow" data-n="05">Evaluation</div>
+    <div class="eyebrow" data-n="06">Evaluation</div>
     <div class="cta-block">
       <div class="copy">
         <h3>Request a test sample</h3>
@@ -350,7 +394,7 @@ table.data a:hover{text-decoration:underline}
 <!-- ============ THESIS ============ -->
 <section class="thesis">
   <div class="wrap">
-    <div class="eyebrow" data-n="06">Thesis</div>
+    <div class="eyebrow" data-n="07">Thesis</div>
     <h2 class="sec">We're building an asset</h2>
     <p>Most battery suppliers sell a sealed black box and move on. We're building the opposite: an <b>open, certified, data-rich platform</b> that any brand or technician can plug into.</p>
     <p>Patents, certifications, fleet telemetry, and a repair layer compound into one thing — an asset that outlives any single product cycle, and a head start on the repairability rules coming to the EU.</p>
