@@ -93,6 +93,16 @@ td.lbl{font-family:var(--mono);font-size:.72rem;color:var(--ink);white-space:now
 td.val{font-family:var(--body)}
 tr:nth-child(even) td{background:rgba(91,43,214,.025)}
 
+/* ---------- Drawings ---------- */
+.drawings{margin:.6rem 0 1rem}
+.drawings figure{margin:0 0 1.1rem}
+.drawings img{width:100%;max-width:560px;height:auto;display:block;margin:0 auto}
+.drawings figure.third img{max-width:33%}
+.drawings figure.pair .row{display:flex;gap:1.4rem;justify-content:center;align-items:flex-end}
+.drawings figure.pair .row img{width:auto;max-width:46%;margin:0}
+.drawings figcaption{font-family:var(--mono);font-size:.66rem;color:var(--mute);text-align:center;margin-top:.35rem}
+.drawings figcaption b{color:var(--signal);font-weight:600}
+
 /* ---------- Inline figure ---------- */
 .figure{margin:.6rem 0 .8rem}
 .figure img{max-width:62%;height:auto;display:block;border:1px solid var(--grid)}
@@ -146,6 +156,16 @@ const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>
 
 function rows(arr){
   return arr.map(([l,v])=>`<tr><td class="lbl">${esc(l)}</td><td class="val">${esc(v)}</td></tr>`).join("");
+}
+
+function drawing(d, name){
+  const cap = `<figcaption><b>${esc(d.caption||"")}</b></figcaption>`;
+  if(d.srcs){ // two images side by side, one shared caption
+    const imgs = d.srcs.map(s=>`<img src="${esc(s)}" alt="${esc(name)} — ${esc(d.caption||"")}" loading="lazy">`).join("");
+    return `<figure class="pair"><div class="row">${imgs}</div>${cap}</figure>`;
+  }
+  const cls = d.size==="third" ? " class=\"third\"" : "";
+  return `<figure${cls}><img src="${esc(d.src)}" alt="${esc(name)} — ${esc(d.caption||"")}" loading="lazy">${cap}</figure>`;
 }
 
 function render(m){
@@ -252,6 +272,12 @@ function render(m){
       <thead><tr><th>Item</th><th>Specification</th></tr></thead>
       <tbody>${rows(m.mechanical)}</tbody>
     </table>
+
+    ${(m.drawings && m.drawings.length) ? `
+    <h3>Drawings</h3>
+    <div class="drawings">
+      ${m.drawings.map(d=>drawing(d, m.name)).join("")}
+    </div>` : ""}
 
     <h3>Connector type &amp; pin definition</h3>
     <p>The discharge connector has 5 pins:</p>
@@ -409,9 +435,11 @@ function load(key){
   history.replaceState(null,"",`?model=${key}`);
 }
 
-// Build model selector
+// Build model selector (ordered to match the product line table)
+const order = (typeof MODEL_ORDER !== "undefined" ? MODEL_ORDER : Object.keys(MODELS))
+  .filter(k => MODELS[k]);
 const sel = document.getElementById("modelSelect");
-Object.keys(MODELS).forEach(k=>{
+order.forEach(k=>{
   const o=document.createElement("option");
   o.value=k; o.textContent=`Infinite Battery ${MODELS[k].name} (${MODELS[k].config})`;
   sel.appendChild(o);
@@ -420,7 +448,7 @@ sel.addEventListener("change", e=>load(e.target.value));
 
 // Initial model from URL (?model=cargo) or default to first
 const params = new URLSearchParams(location.search);
-const start = MODELS[params.get("model")] ? params.get("model") : Object.keys(MODELS)[0];
+const start = MODELS[params.get("model")] ? params.get("model") : order[0];
 sel.value = start;
 load(start);
 </script>
