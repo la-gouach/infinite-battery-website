@@ -1,72 +1,49 @@
-# Infinite Battery — one-pager
+# Infinite Battery — website
 
-Static one-page site. Scientific-paper aesthetic (Space Grotesk / Source Serif 4 / IBM Plex Mono, violet accent `#5B2BD6`). No build step — plain HTML/CSS.
+Static site, scientific-paper aesthetic (Space Grotesk / Source Serif 4 / IBM Plex Mono, violet accent `#5B2BD6`). No build step — plain HTML/CSS/JS.
 
 ## Structure
 
 ```
-infinite-site/
-├── index.html              ← the whole page (CSS inline in <style>)
-├── netlify.toml            ← Netlify config (no build, just serves root)
+infinite-battery-website/
+├── index.html              ← the one-pager (CSS inline in <style>)
+├── design-system.html      ← brand & design-system reference
+├── CNAME                   ← custom domain for GitHub Pages
 ├── .gitignore
+├── spec/                   ← per-model specification sheets
+│   ├── spec.html           ← template (renders any model, print-to-PDF)
+│   ├── data.js             ← per-model data (add a model here)
+│   └── images/             ← hero, pinout & drawing images per model
 └── assets/
-    ├── rendercad_main.png  ← Fig. 1 product render
-    ├── datasheets/         ← drop product PDFs here
-    └── 3d/                 ← drop STEP files here
+    └── images/             ← page images, dashboard carousel, abuse tests
 ```
 
 ## Local preview
 
-Open `index.html` directly in a browser, or serve it:
-
 ```bash
 python3 -m http.server 8000
 # → http://localhost:8000
+#   spec sheets: http://localhost:8000/spec/spec.html?model=classic
 ```
 
-## Put it online (first time)
+## Hosting — GitHub Pages
 
-### 1. Create the repo and push
+The site is served by GitHub Pages from the `main` branch (root), at **https://infinite-battery.com**.
 
-```bash
-cd infinite-site
-git init
-git add .
-git commit -m "Initial one-pager"
-git branch -M main
-# create an empty repo on github.com first, then:
-git remote add origin git@github.com:YOUR_USER/infinite-site.git
-git push -u origin main
-```
-
-### 2. Connect to Netlify (auto-deploy on push)
-
-1. Go to https://app.netlify.com → "Add new site" → "Import an existing project"
-2. Pick GitHub → select `infinite-site`
-3. Build command: *(leave empty)* · Publish directory: `.`
-4. Deploy. You get a `*.netlify.app` URL immediately.
-
-### 3. Custom domain (optional)
-
-Netlify → Site → Domain management → add `infinite.gouach.com`, then add the
-CNAME record Netlify gives you to your DNS. HTTPS is automatic.
+- **Deploy:** push to `main`. GitHub Pages rebuilds automatically.
+- **Settings:** repo → Settings → Pages → Source = `main` / root.
+- **Custom domain:** set by the `CNAME` file (`infinite-battery.com`). DNS uses the four GitHub Pages A records on the apex plus a `www` CNAME → `la-gouach.github.io`. HTTPS is enabled via *Enforce HTTPS*.
 
 ## Day-to-day workflow
 
 ```bash
-# edit index.html (or use Claude Code in this folder)
+# edit index.html / spec/* (or use Claude Code in this folder)
 git add .
-git commit -m "Add Cargo datasheet + specs"
-git push
-# Netlify rebuilds and deploys automatically
+git commit -m "…"
+git push          # GitHub Pages redeploys automatically
 ```
 
-## To-do / placeholders still in the page
+## Adding a battery model
 
-- [ ] Product table specs (voltage, capacity, current, weight, dimensions)
-- [ ] Decide Mega = one column or two (M50 / M58)
-- [ ] Wire datasheet PDF links → `assets/datasheets/`
-- [ ] Wire 3D STEP links → `assets/3d/`
-- [ ] "Request a sample" button → Notion form URL
-- [ ] Confirm footer email
-- [ ] Confirm YouTube explainer link (`vfiH7PKu-XE`)
+Add an entry to `MODELS` in `spec/data.js`, drop its images under `spec/images/<model>/`,
+and add its key to `MODEL_ORDER`. The spec template and the product table link pick it up.

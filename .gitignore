@@ -7,6 +7,9 @@ Thumbs.db
 .idea/
 *.swp
 
+# Claude Code local settings (not for a public repo)
+.claude/
+
 # Node (if you later add a build step)
 node_modules/
 dist/
