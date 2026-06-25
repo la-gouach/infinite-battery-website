@@ -25,7 +25,8 @@
       "Bash(python3)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8787/)",
       "Bash(python3 '/Users/alexandrevallette/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ae4fddca-b225-44cb-b2de-d8c53ac06800/a048f94b-2ea3-4aeb-80fb-70dc6dafab77/skills/docx/scripts/office/unpack.py' '/Users/alexandrevallette/Desktop/Infinite Battery Specifications \\(10s3p_2170\\).docx' /tmp/classic_unpacked/)",
-      "Bash(python3 /tmp/extract.py /tmp/classic_unpacked/word/document.xml)"
+      "Bash(python3 /tmp/extract.py /tmp/classic_unpacked/word/document.xml)",
+      "Bash(gh auth *)"
     ]
   }
 }
